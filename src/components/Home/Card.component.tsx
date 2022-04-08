@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useRef} from 'react';
 import {
   View,
   Text,
@@ -6,6 +6,7 @@ import {
   StyleSheet,
   useWindowDimensions,
   Pressable,
+  Animated,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 
@@ -17,17 +18,30 @@ export interface CardProps {
   votes: string;
   gradientColors: string[];
   onPress: () => void;
+  index: number;
 }
 
-export const Card = ({text, votes, gradientColors, onPress}: CardProps) => {
+export const Card = ({
+  text,
+  votes,
+  gradientColors,
+  onPress,
+  index,
+}: CardProps) => {
   const {height} = useWindowDimensions();
+
+  const checkIndexIsOdd = (n: number): Boolean => {
+    return n % 2 !== 0;
+  };
+
+  const odd = checkIndexIsOdd(index);
 
   return (
     <>
       <Pressable onPress={onPress}>
-        <View style={styles.card}>
-          <Image
-            style={styles.cardImage}
+        <View style={[styles.card, {marginTop: odd ? 35 : 0}]}>
+          <Animated.Image
+            style={[styles.cardImage]}
             source={require('../../assets/tranquilidad-marina.png')}
           />
           <LinearGradient
@@ -50,11 +64,13 @@ const styles = StyleSheet.create({
   card: {
     width: 151,
     height: 218,
-    margin: 15,
+    marginHorizontal: 15,
     position: 'relative',
     justifyContent: 'flex-end',
+    alignItems: 'center',
     borderRadius: 10,
   },
+
   cardImage: {
     position: 'absolute',
     top: 0,

@@ -29,6 +29,14 @@ export const HomeStack = () => {
           fontWeight: 'bold',
         },
         cardStyle: {backgroundColor: colors.white},
+        /*  cardStyleInterpolator: ({index, current, next, layouts: {screen}}) => {
+          const translateX = current.progress.interpolate({
+            inputRange: [index - 1, index, index + 1],
+            outputRange: [screen.width, 0, 0],
+          });
+
+          return {cardStyle: {transform: [{translateX}]}};
+        }, */
       }}>
       <Stack.Screen
         name="Home"

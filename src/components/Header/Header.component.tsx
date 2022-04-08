@@ -1,17 +1,21 @@
 import React from 'react';
 import {StyleSheet, Text, useWindowDimensions, View} from 'react-native';
+import {Hamburguer} from './Hamburguer.component';
 
 export const Header = () => {
   const {width, height} = useWindowDimensions();
 
   return (
     <View style={[styles.header, {width, height: height * 0.1}]}>
+      <Hamburguer />
       <Text
         style={{
-          color: '#ffffff',
+          marginLeft: width * 0.2,
+          color: 'black',
           textAlign: 'center',
+          alignSelf: 'center',
           fontWeight: 'bold',
-          fontSize: 18,
+          fontSize: 24,
         }}>
         Discover
       </Text>
@@ -25,8 +29,9 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     zIndex: 10,
+    flexDirection: 'row',
     backgroundColor: 'transparent',
-    justifyContent: 'center',
+
     alignItems: 'center',
   },
 });
