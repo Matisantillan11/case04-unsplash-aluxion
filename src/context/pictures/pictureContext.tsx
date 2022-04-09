@@ -34,7 +34,7 @@ export const PictureProvider = ({children}: any) => {
     dispatch({type: 'GET_PICTURES_PENDING'});
 
     try {
-      const payload = await unsplashAPI.get(`/photos/random?count=10`);
+      const payload = await unsplashAPI.get(`/photos/random?count=20`);
       console.log({payload});
       if (Array.isArray(payload.data)) {
         return dispatch({

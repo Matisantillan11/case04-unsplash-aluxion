@@ -23,7 +23,7 @@ export const Header = ({location, navigation}: HeaderProps) => {
         styles.header,
         {
           width,
-          height: height * 0.1,
+          height: height * 0.15,
           position: location === 'pictureDetail' ? 'absolute' : 'relative',
         },
       ]}>
@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     zIndex: 2,
-    padding: 25,
+    paddingHorizontal: 25,
     flexDirection: 'row',
     backgroundColor: 'transparent',
     alignItems: 'center',

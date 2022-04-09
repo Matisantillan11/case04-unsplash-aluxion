@@ -37,7 +37,7 @@ export const Home = ({navigation, pictures, status}: Props) => {
         <>
           <ScrollView>
             <Header location="home" navigation={navigation} />
-            <View style={[styles.root, {marginVertical: width * 0.2}]}>
+            <View style={styles.root}>
               {pictures?.map((picture: Picture, index: number) => (
                 <CardController
                   onPress={() => {
@@ -71,6 +71,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-start',
     flexWrap: 'wrap',
+    marginBottom: 20,
   },
 
   animatedPicture: {},

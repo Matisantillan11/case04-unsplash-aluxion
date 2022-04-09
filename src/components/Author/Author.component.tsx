@@ -34,10 +34,7 @@ export const Author = ({navigation, photosOfUser, status, author}: Props) => {
           <Header location="author" navigation={navigation} />
           <ScrollView>
             <View
-              style={[
-                styles.infoContainer,
-                {width, height: height * 0.15, marginVertical: height * 0.02},
-              ]}>
+              style={[styles.infoContainer, {width, height: height * 0.15}]}>
               <Image
                 style={styles.imageProfile}
                 source={{
@@ -71,20 +68,6 @@ export const Author = ({navigation, photosOfUser, status, author}: Props) => {
                   gradientColors={[colors.gray, colors.grayOpacity70]}
                 />
               ))}
-              {/* <CardController
-             onPress={() => {
-              navigation.navigate('PictureDetail', {
-                pictures,
-                pictureSelected: picture.id,
-              });
-            }}
-            text={picture?.description}
-            votes={picture?.likes.toString()}
-            key={picture.id}
-            index={index}
-            image={picture?.urls?.regular}
-            gradientColors={[colors.gray, colors.grayOpacity70]}
-          /> */}
             </View>
           </ScrollView>
         </>
@@ -101,7 +84,7 @@ const styles = StyleSheet.create({
   imageProfile: {width: 63, height: 63, borderRadius: 50},
   authorContainer: {
     marginHorizontal: 10,
-    justifyContent: 'space-between',
+    justifyContent: 'space-evenly',
   },
   authorName: {
     fontSize: 22,
@@ -125,7 +108,7 @@ const styles = StyleSheet.create({
     lineHeight: 49,
     color: colors.dark,
     fontWeight: 'bold',
-    marginVertical: 10,
+    marginVertical: 20,
     marginLeft: 10,
   },
 });
