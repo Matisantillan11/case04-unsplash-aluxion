@@ -14,13 +14,30 @@ export const pictureInitialState: PictureState = {
   result: [],
 };
 
-type PictureAction =
+export type PictureAction =
+  | {type: 'REINTENTAR'}
+  | {type: 'GET_PICTURES_BY_USER_PENDING'}
+  | {
+      type: 'GET_PICTURES_BY_USER_FULLFILLED';
+      payload: {
+        result: Picture[];
+        message: string;
+        error: boolean;
+      };
+    }
+  | {
+      type: 'GET_PICTURES_BY_USER_REJECTED';
+      payload: {
+        result: Picture[];
+        message: string;
+        error: boolean;
+      };
+    }
   | {type: 'GET_PICTURES_PENDING'}
   | {
       type: 'GET_PICTURES_FULLFILLED';
       payload: {
         result: Picture[];
-        status: string;
         message: string;
         error: boolean;
       };
@@ -29,7 +46,6 @@ type PictureAction =
       type: 'GET_PICTURES_REJECTED';
       payload: {
         result: Picture[];
-        status: string;
         message: string;
         error: boolean;
       };
@@ -40,33 +56,45 @@ export const pictureReducer = (
   action: PictureAction,
 ): PictureState => {
   switch (action.type) {
+    case 'GET_PICTURES_BY_USER_PENDING':
     case 'GET_PICTURES_PENDING': {
       return {
         ...state,
         status: 'fetching',
       };
     }
+
+    case 'GET_PICTURES_BY_USER_FULLFILLED':
     case 'GET_PICTURES_FULLFILLED': {
-      const {result, status, message, error} = action.payload;
+      const {result, message, error} = action.payload;
 
       return {
         ...state,
         status: 'fetched',
         message,
-        error: false,
+        error,
         result,
       };
     }
-
+    case 'GET_PICTURES_BY_USER_REJECTED':
     case 'GET_PICTURES_REJECTED': {
-      const {result, status, message, error} = action.payload;
+      const {result, message, error} = action.payload;
 
       return {
         ...state,
         status: 'error',
         message,
-        error: true,
+        error,
         result,
+      };
+    }
+
+    case 'REINTENTAR': {
+      return {
+        status: 'initial',
+        message: '',
+        error: false,
+        result: [],
       };
     }
     default: {

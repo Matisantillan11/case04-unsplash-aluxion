@@ -78,6 +78,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   gradient: {
+    width: '100%',
     padding: 15,
     justifyContent: 'flex-end',
     alignContent: 'flex-start',

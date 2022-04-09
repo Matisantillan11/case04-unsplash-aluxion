@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  ActivityIndicator,
   Image,
   ScrollView,
   StyleSheet,
@@ -12,61 +13,82 @@ import {Card} from '../Home/Card.component';
 import {colors} from '../../lib/theme/colors';
 import {Header} from '../Header/Header.component';
 import {CardController} from '../../controllers/Home/Card.controller';
+import {Photo, User} from '../../interfaces/interfaces';
+import {Loader} from '../Loader/Loader.component';
 
 interface Props {
   navigation: NavigationProp<ParamListBase>;
+  photosOfUser: Photo[];
+  author: User;
+  status: 'fetching' | 'fetched' | 'error' | 'initial';
 }
 
-export const Author = ({navigation}: Props) => {
+export const Author = ({navigation, photosOfUser, status, author}: Props) => {
   const {width, height} = useWindowDimensions();
   return (
     <>
-      <Header />
-      <ScrollView>
-        <View
-          style={[
-            styles.infoContainer,
-            {width, height: height * 0.15, marginTop: height * 0.1},
-          ]}>
-          <Image
-            style={styles.imageProfile}
-            source={{
-              uri: 'https://images.unsplash.com/photo-1649359929082-df0ab123036c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=688&q=80',
-            }}
-          />
-          <View style={[styles.authorContainer, {width: width * 0.7}]}>
-            <Text style={styles.authorName}>Norman Foster</Text>
-            <Text style={styles.biography}>
-              British architect whose company, Foster + Partners, maintains an
-              international design practice famous for high-tech architecture.
-            </Text>
-          </View>
-        </View>
+      {status === 'fetching' ? (
+        <Loader />
+      ) : (
+        <>
+          <Header location="author" navigation={navigation} />
+          <ScrollView>
+            <View
+              style={[
+                styles.infoContainer,
+                {width, height: height * 0.15, marginVertical: height * 0.02},
+              ]}>
+              <Image
+                style={styles.imageProfile}
+                source={{
+                  uri: author?.profile_image.medium,
+                }}
+              />
+              <View style={[styles.authorContainer, {width: width * 0.7}]}>
+                <Text style={styles.authorName}>{author?.name}</Text>
+                <Text style={styles.biography} numberOfLines={3}>
+                  {author?.bio}
+                </Text>
+              </View>
+            </View>
 
-        <View style={styles.carouselContainer}>
-          <Text style={styles.title}>My photos</Text>
+            <View style={styles.carouselContainer}>
+              <Text style={styles.title}>My photos</Text>
 
-          <CardController
-            onPress={() => {
-              navigation.navigate('PictureDetail');
+              {photosOfUser?.map((photo: Photo, index: number) => (
+                <CardController
+                  onPress={() => {
+                    navigation.navigate('PictureDetail', {
+                      pictures: photosOfUser,
+                      pictureSelected: photo.id,
+                    });
+                  }}
+                  text={photo?.description}
+                  votes={photo?.likes.toString()}
+                  key={photo.id}
+                  index={index}
+                  image={photo?.urls?.regular}
+                  gradientColors={[colors.gray, colors.grayOpacity70]}
+                />
+              ))}
+              {/* <CardController
+             onPress={() => {
+              navigation.navigate('PictureDetail', {
+                pictures,
+                pictureSelected: picture.id,
+              });
             }}
-            text="Tranquilidad Marina"
-            votes="200"
-            index={0}
+            text={picture?.description}
+            votes={picture?.likes.toString()}
+            key={picture.id}
+            index={index}
+            image={picture?.urls?.regular}
             gradientColors={[colors.gray, colors.grayOpacity70]}
-          />
-
-          <CardController
-            onPress={() => {
-              navigation.navigate('PictureDetail');
-            }}
-            text="Tranquilidad Marina"
-            votes="200"
-            index={1}
-            gradientColors={[colors.gray, colors.grayOpacity70]}
-          />
-        </View>
-      </ScrollView>
+          /> */}
+            </View>
+          </ScrollView>
+        </>
+      )}
     </>
   );
 };
@@ -79,7 +101,7 @@ const styles = StyleSheet.create({
   imageProfile: {width: 63, height: 63, borderRadius: 50},
   authorContainer: {
     marginHorizontal: 10,
-    justifyContent: 'space-evenly',
+    justifyContent: 'space-between',
   },
   authorName: {
     fontSize: 22,
@@ -96,6 +118,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     paddingHorizontal: 10,
+    marginBottom: 20,
   },
   title: {
     fontSize: 42,

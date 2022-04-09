@@ -18,6 +18,7 @@ import {colors} from '../../lib/theme/colors';
 import {Picture} from '../../interfaces/interfaces';
 import {Header} from '../Header/Header.component';
 import {CardController} from '../../controllers/Home/Card.controller';
+import {Loader} from '../Loader/Loader.component';
 
 interface Props {
   navigation: NavigationProp<ParamListBase>;
@@ -28,52 +29,35 @@ interface Props {
 export const Home = ({navigation, pictures, status}: Props) => {
   const {width} = useWindowDimensions();
 
-  const DATA = [
-    {
-      id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-      title: 'First Item',
-      votes: '354',
-    },
-    {
-      id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-      title: 'Second Item',
-      votes: '1852',
-    },
-    {
-      id: '58694a0f-3da1-471f-bd96-145571e29d72',
-      title: 'Third Item',
-      votes: '200',
-    },
-  ];
-
   return (
     <>
-      <Header />
-      <ScrollView>
-        <View style={[styles.root, {marginVertical: width * 0.2}]}>
-          {pictures?.map((picture: Picture, index: number) => (
-            <CardController
-              onPress={() => {
-                navigation.navigate('PictureDetail', {
-                  pictures,
-                  pictureSelected: picture.id,
-                });
-              }}
-              text={picture?.description}
-              votes={picture?.likes.toString()}
-              key={picture.id}
-              index={index}
-              image={picture?.urls?.regular}
-              gradientColors={[colors.gray, colors.grayOpacity70]}
-            />
-          ))}
-        </View>
-      </ScrollView>
-
-      {/* <PictureDetailController
-        opacity={fadeAnimation}
-        navigation={navigation}
-      /> */}
+      {status === 'fetching' ? (
+        <ActivityIndicator size="large" color={colors.gray} />
+      ) : (
+        <>
+          <ScrollView>
+            <Header location="home" navigation={navigation} />
+            <View style={[styles.root, {marginVertical: width * 0.2}]}>
+              {pictures?.map((picture: Picture, index: number) => (
+                <CardController
+                  onPress={() => {
+                    navigation.navigate('PictureDetail', {
+                      pictures,
+                      pictureSelected: picture.id,
+                    });
+                  }}
+                  text={picture?.description}
+                  votes={picture?.likes.toString()}
+                  key={picture.id}
+                  index={index}
+                  image={picture?.urls?.regular}
+                  gradientColors={[colors.gray, colors.grayOpacity70]}
+                />
+              ))}
+            </View>
+          </ScrollView>
+        </>
+      )}
     </>
   );
 };

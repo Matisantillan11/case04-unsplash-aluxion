@@ -10,13 +10,12 @@ import {
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import {colors} from '../../lib/theme/colors';
-import {Header} from '../Header/Header.component';
 import {NavigationProp, ParamListBase} from '@react-navigation/native';
 import {Picture} from '../../interfaces/interfaces';
 
 interface Props {
   navigation: NavigationProp<ParamListBase>;
-  picture: any;
+  picture: Picture;
 }
 
 export const PictureFullPage = ({navigation, picture}: Props) => {
@@ -51,7 +50,9 @@ export const PictureFullPage = ({navigation, picture}: Props) => {
               colors={[colors.grayOpacity20, colors.grayOpacity70]}
               style={[styles.gradient, {width, height: height * 0.35}]}>
               <View style={[styles.textContainer, {width: width * 0.7}]}>
-                <Text style={styles.title}>{picture?.description}</Text>
+                <Text style={styles.title} numberOfLines={2}>
+                  {picture?.description}
+                </Text>
                 <Text style={styles.votes}>
                   {picture?.likes.toString()} votos
                 </Text>
@@ -67,7 +68,10 @@ export const PictureFullPage = ({navigation, picture}: Props) => {
 
                 <View>
                   <Text style={styles.authorName}>{picture?.user?.name}</Text>
-                  <Pressable onPress={() => navigation.navigate('Author')}>
+                  <Pressable
+                    onPress={() =>
+                      navigation.navigate('Author', {author: picture?.user})
+                    }>
                     <Text style={styles.viewButton}>View Profile</Text>
                   </Pressable>
                 </View>

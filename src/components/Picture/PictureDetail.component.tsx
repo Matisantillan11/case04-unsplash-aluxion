@@ -1,38 +1,25 @@
-import React, {useRef} from 'react';
-import {
-  Animated,
-  FlatList,
-  Image,
-  Pressable,
-  StyleSheet,
-  Text,
-  useWindowDimensions,
-  View,
-} from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
+import React from 'react';
+import {StyleSheet, useWindowDimensions} from 'react-native';
 import {colors} from '../../lib/theme/colors';
 import {Header} from '../Header/Header.component';
-import {
-  NavigationProp,
-  RouteProp,
-  ParamListBase,
-} from '@react-navigation/native';
+import {NavigationProp, ParamListBase} from '@react-navigation/native';
+
 import {PictureFullPage} from './PictureFullpage.component';
-import {RootStackParamList} from '../../navigators/HomeStackNavigator';
-import Carousel from 'react-native-snap-carousel';
 import {Picture} from '../../interfaces/interfaces';
+import Carousel from 'react-native-snap-carousel';
 
 interface Props {
   navigation: NavigationProp<ParamListBase>;
   pictures: Picture[];
-  picture: Picture;
+  picture: number;
 }
 
 export const PictureDetail = ({navigation, pictures, picture}: Props) => {
-  const {width, height} = useWindowDimensions();
-
+  const {width} = useWindowDimensions();
+  console.log({picture});
   return (
     <>
+      <Header location="pictureDetail" navigation={navigation} />
       <Carousel
         layout="tinder"
         data={pictures}
@@ -40,6 +27,7 @@ export const PictureDetail = ({navigation, pictures, picture}: Props) => {
           <PictureFullPage navigation={navigation} picture={item.item} />
         )}
         sliderWidth={width}
+        firstItem={picture}
         itemWidth={width}
       />
     </>

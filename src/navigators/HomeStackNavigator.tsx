@@ -8,11 +8,12 @@ import {AuthorView as Author} from '../screens/Author/Author.view';
 
 //library
 import {colors} from '../lib/theme/colors';
+import {User} from '../interfaces/interfaces';
 
 export type RootStackParamList = {
   Home: undefined;
   PictureDetail: {pictures: any; pictureSelected: string};
-  Author: {authorId: string};
+  Author: {author: User};
 };
 
 const Stack = createStackNavigator<RootStackParamList>();

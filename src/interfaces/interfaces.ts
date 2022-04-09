@@ -111,3 +111,68 @@ export interface Social {
   twitter_username: null;
   paypal_email: null;
 }
+
+// collection of users
+
+export interface Photo {
+  id: string;
+  created_at: string;
+  updated_at: string;
+  promoted_at: null | string;
+  width: number;
+  height: number;
+  color: string;
+  blur_hash: string;
+  description: null;
+  alt_description: null;
+  urls: Urls;
+  links: PhotoLinks;
+  categories: any[];
+  likes: number;
+  liked_by_user: boolean;
+  current_user_collections: any[];
+  sponsorship: null;
+  topic_submissions: TopicSubmissions;
+  user: User;
+}
+
+export interface PhotoLinks {
+  self: string;
+  html: string;
+  download: string;
+  download_location: string;
+}
+
+export interface TopicSubmissions {
+  'color-of-water'?: ActForNature;
+  'act-for-nature'?: ActForNature;
+  nature?: Nature;
+}
+
+export interface ActForNature {
+  status: string;
+}
+
+export interface Nature {
+  status: string;
+  approved_on: string;
+}
+
+export interface Urls {
+  raw: string;
+  full: string;
+  regular: string;
+  small: string;
+  thumb: string;
+  small_s3: string;
+}
+
+export interface UserLinks {
+  self: string;
+  html: string;
+  photos: string;
+  likes: string;
+  portfolio: string;
+  following: string;
+  followers: string;
+}

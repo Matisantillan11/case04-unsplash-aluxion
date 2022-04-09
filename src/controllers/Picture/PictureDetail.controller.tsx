@@ -16,16 +16,13 @@ interface Props {
 export const PictureDetailController = (props: Props) => {
   const {pictures, pictureSelected} = props.route.params;
 
-  const picture = useMemo(() => {
+  const firtItem = useMemo(() => {
     if (pictures.length > 0)
-      return pictures.find(
-        (picture: Picture) => picture.id === pictureSelected,
+      return pictures.indexOf(
+        pictures.find((picture: Picture) => picture.id === pictureSelected),
       );
-    return [];
-  }, [pictures, pictureSelected]);
+    return 0;
+  }, [pictureSelected]);
 
-  console.log(pictureSelected);
-  console.log({picture});
-
-  return <PictureDetail {...props} pictures={pictures} picture={picture} />;
+  return <PictureDetail {...props} pictures={pictures} picture={firtItem} />;
 };
