@@ -1,25 +1,31 @@
-import React, {useRef} from 'react';
-import {NavigationProp, ParamListBase} from '@react-navigation/native';
+import React, {useMemo, useRef} from 'react';
+import {
+  NavigationProp,
+  RouteProp,
+  ParamListBase,
+} from '@react-navigation/native';
 import {PictureDetail} from '../../components/Picture/PictureDetail.component';
-import {Animated} from 'react-native';
+import {RootStackParamList} from '../../navigators/HomeStackNavigator';
+import {Picture} from '../../interfaces/interfaces';
 
 interface Props {
   navigation: NavigationProp<ParamListBase>;
-  opacity: any;
+  route: RouteProp<RootStackParamList, 'PictureDetail'>;
 }
 
 export const PictureDetailController = (props: Props) => {
-  const fadeAnimation = useRef(new Animated.Value(0)).current;
+  const {pictures, pictureSelected} = props.route.params;
 
-  const fadeIn = () => {
-    Animated.timing(fadeAnimation, {
-      toValue: 1,
-      duration: 500,
-      useNativeDriver: false,
-    }).start();
-  };
+  const picture = useMemo(() => {
+    if (pictures.length > 0)
+      return pictures.find(
+        (picture: Picture) => picture.id === pictureSelected,
+      );
+    return [];
+  }, [pictures, pictureSelected]);
 
-  return (
-    <PictureDetail {...props} fadeIn={fadeIn} fadeAnimation={fadeAnimation} />
-  );
+  console.log(pictureSelected);
+  console.log({picture});
+
+  return <PictureDetail {...props} pictures={pictures} picture={picture} />;
 };

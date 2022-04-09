@@ -11,6 +11,7 @@ import {NavigationProp, ParamListBase} from '@react-navigation/native';
 import {Card} from '../Home/Card.component';
 import {colors} from '../../lib/theme/colors';
 import {Header} from '../Header/Header.component';
+import {CardController} from '../../controllers/Home/Card.controller';
 
 interface Props {
   navigation: NavigationProp<ParamListBase>;
@@ -45,20 +46,23 @@ export const Author = ({navigation}: Props) => {
         <View style={styles.carouselContainer}>
           <Text style={styles.title}>My photos</Text>
 
-          <Card
+          <CardController
             onPress={() => {
               navigation.navigate('PictureDetail');
             }}
             text="Tranquilidad Marina"
             votes="200"
+            index={0}
             gradientColors={[colors.gray, colors.grayOpacity70]}
           />
-          <Card
+
+          <CardController
             onPress={() => {
               navigation.navigate('PictureDetail');
             }}
             text="Tranquilidad Marina"
             votes="200"
+            index={1}
             gradientColors={[colors.gray, colors.grayOpacity70]}
           />
         </View>

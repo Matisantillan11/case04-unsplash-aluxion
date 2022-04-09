@@ -11,7 +11,7 @@ import {colors} from '../lib/theme/colors';
 
 export type RootStackParamList = {
   Home: undefined;
-  PictureDetail: undefined;
+  PictureDetail: {pictures: any; pictureSelected: string};
   Author: {authorId: string};
 };
 

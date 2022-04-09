@@ -1,6 +1,7 @@
 import React, {useRef} from 'react';
 import {
   Animated,
+  FlatList,
   Image,
   Pressable,
   StyleSheet,
@@ -11,68 +12,36 @@ import {
 import LinearGradient from 'react-native-linear-gradient';
 import {colors} from '../../lib/theme/colors';
 import {Header} from '../Header/Header.component';
-import {NavigationProp, ParamListBase} from '@react-navigation/native';
+import {
+  NavigationProp,
+  RouteProp,
+  ParamListBase,
+} from '@react-navigation/native';
+import {PictureFullPage} from './PictureFullpage.component';
+import {RootStackParamList} from '../../navigators/HomeStackNavigator';
+import Carousel from 'react-native-snap-carousel';
+import {Picture} from '../../interfaces/interfaces';
 
 interface Props {
   navigation: NavigationProp<ParamListBase>;
-  fadeIn: () => void;
-  fadeAnimation: any;
-  opacity: any;
+  pictures: Picture[];
+  picture: Picture;
 }
 
-export const PictureDetail = ({
-  navigation,
-  fadeIn,
-  fadeAnimation,
-  opacity,
-}: Props) => {
+export const PictureDetail = ({navigation, pictures, picture}: Props) => {
   const {width, height} = useWindowDimensions();
 
   return (
     <>
-      <Pressable onPress={fadeIn}>
-        <Animated.View
-          style={[
-            styles.container,
-            {
-              width,
-              height,
-            },
-          ]}>
-          <Image
-            style={{width, height}}
-            source={{
-              uri: 'https://images.unsplash.com/photo-1649359929082-df0ab123036c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=688&q=80',
-            }}
-          />
-          <Animated.View style={{opacity: fadeAnimation}}>
-            <LinearGradient
-              colors={[colors.grayOpacity20, colors.grayOpacity70]}
-              style={[styles.gradient, {width, height: height * 0.35}]}>
-              <View style={[styles.textContainer, {width: width * 0.7}]}>
-                <Text style={styles.title}>Huitarra Canchera</Text>
-                <Text style={styles.votes}>200 votos</Text>
-              </View>
-
-              <View style={styles.authorContainer}>
-                <Image
-                  style={styles.authorImage}
-                  source={{
-                    uri: 'https://images.unsplash.com/profile-1639054208491-784e0fa32f1e?dpr=1&auto=format&fit=crop&w=150&h=150&q=60&crop=faces&bg=fff',
-                  }}
-                />
-
-                <View>
-                  <Text style={styles.authorName}>Norman Foster</Text>
-                  <Pressable onPress={() => navigation.navigate('Author')}>
-                    <Text style={styles.viewButton}>View Profile</Text>
-                  </Pressable>
-                </View>
-              </View>
-            </LinearGradient>
-          </Animated.View>
-        </Animated.View>
-      </Pressable>
+      <Carousel
+        layout="tinder"
+        data={pictures}
+        renderItem={item => (
+          <PictureFullPage navigation={navigation} picture={item.item} />
+        )}
+        sliderWidth={width}
+        itemWidth={width}
+      />
     </>
   );
 };

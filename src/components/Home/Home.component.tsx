@@ -2,7 +2,6 @@ import React, {useEffect, useRef, useState} from 'react';
 
 import {
   View,
-  Text,
   Animated,
   StyleSheet,
   useWindowDimensions,
@@ -13,13 +12,12 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import {NavigationProp, ParamListBase} from '@react-navigation/native';
-import {Card} from './Card.component';
-import EStyleSheet from 'react-native-extended-stylesheet';
 
 //library
 import {colors} from '../../lib/theme/colors';
 import {Picture} from '../../interfaces/interfaces';
 import {Header} from '../Header/Header.component';
+import {CardController} from '../../controllers/Home/Card.controller';
 
 interface Props {
   navigation: NavigationProp<ParamListBase>;
@@ -28,73 +26,47 @@ interface Props {
 }
 
 export const Home = ({navigation, pictures, status}: Props) => {
-  const fadeAnimation = useRef(new Animated.Value(0)).current;
   const {width} = useWindowDimensions();
-  const fadeIn = () => {
-    Animated.timing(fadeAnimation, {
-      toValue: 1,
-      duration: 500,
-      useNativeDriver: false,
-    }).start();
-  };
+
+  const DATA = [
+    {
+      id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+      title: 'First Item',
+      votes: '354',
+    },
+    {
+      id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
+      title: 'Second Item',
+      votes: '1852',
+    },
+    {
+      id: '58694a0f-3da1-471f-bd96-145571e29d72',
+      title: 'Third Item',
+      votes: '200',
+    },
+  ];
 
   return (
     <>
       <Header />
       <ScrollView>
         <View style={[styles.root, {marginVertical: width * 0.2}]}>
-          {/*{pictures?.map((picture: Picture) => (*/}
-          <Card
-            onPress={() => fadeIn}
-            text="Tranquilidad Marina"
-            votes="200"
-            index={0}
-            gradientColors={[colors.gray, colors.grayOpacity70]}
-          />
-          <Card
-            onPress={() => {
-              navigation.navigate('PictureDetail');
-            }}
-            text="Tranquilidad Marina"
-            votes="200"
-            index={1}
-            gradientColors={[colors.gray, colors.grayOpacity70]}
-          />
-
-          <Card
-            onPress={() => fadeIn}
-            text="Tranquilidad Marina"
-            votes="200"
-            index={2}
-            gradientColors={[colors.gray, colors.grayOpacity70]}
-          />
-          <Card
-            onPress={() => {
-              navigation.navigate('PictureDetail');
-            }}
-            text="Tranquilidad Marina"
-            votes="200"
-            index={3}
-            gradientColors={[colors.gray, colors.grayOpacity70]}
-          />
-
-          <Card
-            onPress={() => fadeIn}
-            text="Tranquilidad Marina"
-            votes="200"
-            index={4}
-            gradientColors={[colors.gray, colors.grayOpacity70]}
-          />
-          <Card
-            onPress={() => {
-              navigation.navigate('PictureDetail');
-            }}
-            text="Tranquilidad Marina"
-            votes="200"
-            index={5}
-            gradientColors={[colors.gray, colors.grayOpacity70]}
-          />
-          {/*}))}*/}
+          {pictures?.map((picture: Picture, index: number) => (
+            <CardController
+              onPress={() => {
+                navigation.navigate('PictureDetail', {
+                  pictures,
+                  pictureSelected: picture.id,
+                });
+              }}
+              text={picture?.description}
+              votes={picture?.likes.toString()}
+              key={picture.id}
+              index={index}
+              image={picture?.urls?.regular}
+              gradientColors={[colors.gray, colors.grayOpacity70]}
+            />
+          ))}
         </View>
       </ScrollView>
 

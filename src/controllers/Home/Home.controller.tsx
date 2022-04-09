@@ -15,7 +15,7 @@ export const HomeController = (props: Props) => {
   const {getAll, result, status, error, message} = useContext(PictureContext);
   useEffect(() => {
     getAll();
-  }, [result]);
+  }, []);
 
   const pictures = useMemo(() => {
     if (status === 'fetched' && Array.isArray(result) && !error) return result;
