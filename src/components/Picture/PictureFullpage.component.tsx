@@ -68,16 +68,16 @@ export const PictureFullPage = ({navigation, picture}: Props) => {
                     uri: picture?.user?.profile_image?.medium,
                   }}
                 />
+                <Pressable
+                  onPress={() =>
+                    navigation.navigate('Author', {author: picture?.user})
+                  }>
+                  <View>
+                    <Text style={styles.authorName}>{picture?.user?.name}</Text>
 
-                <View>
-                  <Text style={styles.authorName}>{picture?.user?.name}</Text>
-                  <Pressable
-                    onPress={() =>
-                      navigation.navigate('Author', {author: picture?.user})
-                    }>
                     <Text style={styles.viewButton}>View Profile</Text>
-                  </Pressable>
-                </View>
+                  </View>
+                </Pressable>
               </View>
             </LinearGradient>
           </Animated.View>

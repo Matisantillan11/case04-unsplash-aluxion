@@ -29,7 +29,7 @@ export const PictureProvider = ({children}: any) => {
 
     try {
       const payload = await unsplashAPI.get(`/photos/random?count=20`);
-      console.log({payload});
+      
       if (Array.isArray(payload.data)) {
         return dispatch({
           type: 'GET_PICTURES_FULLFILLED',

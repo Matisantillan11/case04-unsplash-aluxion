@@ -56,7 +56,7 @@
   },
   "rnpm": {
     "assets": [
-      "./src/assets/fonts/MuseoSans"
+      "./src/assets/fonts/Poppins"
     ]
   }
 }
