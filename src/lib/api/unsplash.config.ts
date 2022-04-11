@@ -4,7 +4,7 @@ export const unsplashAPI = axios.create({
   baseURL: 'https://api.unsplash.com',
   headers: {
     'Content-Type': 'application/json',
-    Authorization: 'Client-ID lQB_WlprQmpayEp4n0MrCEjUMmJVKRH8lyMq1woyik4',
+    Authorization: 'Client-ID a2f508640cb62f314e0e0763594d40aab1c858a7ef796184067c537a88b276aa',
   },
 });
 
