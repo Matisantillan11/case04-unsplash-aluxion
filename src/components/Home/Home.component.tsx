@@ -1,43 +1,41 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React from 'react';
 
 import {
-  View,
-  Animated,
   StyleSheet,
-  useWindowDimensions,
   ScrollView,
-  Pressable,
-  Image,
-  ImageProps,
-  ActivityIndicator,
+  SafeAreaView,
+  Animated,
 } from 'react-native';
 import {NavigationProp, ParamListBase} from '@react-navigation/native';
+import {CardController} from '../../controllers/Home/Card.controller';
+import {Header} from '../Header/Header.component';
+import { Loader } from '../Loader/Loader.component';
 
 //library
 import {colors} from '../../lib/theme/colors';
+
+//interfaces 
+
 import {Picture} from '../../interfaces/interfaces';
-import {Header} from '../Header/Header.component';
-import {CardController} from '../../controllers/Home/Card.controller';
-import {Loader} from '../Loader/Loader.component';
 
 interface Props {
   navigation: NavigationProp<ParamListBase>;
   pictures: Picture[];
   status: 'fetching' | 'fetched' | 'error' | 'initial';
+  positionAnimationY: Animated.Value
 }
 
-export const Home = ({navigation, pictures, status}: Props) => {
-  const {width} = useWindowDimensions();
+export const Home = ({navigation, pictures, status, positionAnimationY}: Props) => {
 
   return (
-    <>
+    <SafeAreaView>
       {status === 'fetching' ? (
-        <ActivityIndicator size="large" color={colors.gray} />
+        <Loader />
       ) : (
         <>
           <ScrollView>
             <Header location="home" navigation={navigation} />
-            <View style={styles.root}>
+            <Animated.View style={[styles.root, {top: positionAnimationY}]}>
               {pictures?.map((picture: Picture, index: number) => (
                 <CardController
                   onPress={() => {
@@ -54,11 +52,11 @@ export const Home = ({navigation, pictures, status}: Props) => {
                   gradientColors={[colors.gray, colors.grayOpacity70]}
                 />
               ))}
-            </View>
+            </Animated.View>
           </ScrollView>
         </>
       )}
-    </>
+    </SafeAreaView>
   );
 };
 

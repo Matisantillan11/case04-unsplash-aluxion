@@ -1,5 +1,7 @@
 import React from 'react';
 import {ActivityIndicator, useWindowDimensions, View} from 'react-native';
+
+//library
 import {colors} from '../../lib/theme/colors';
 
 export const Loader = () => {

@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, useWindowDimensions} from 'react-native';
+import { StyleSheet, useWindowDimensions} from 'react-native';
 import {colors} from '../../lib/theme/colors';
 import {Header} from '../Header/Header.component';
 import {NavigationProp, ParamListBase} from '@react-navigation/native';
@@ -16,7 +16,6 @@ interface Props {
 
 export const PictureDetail = ({navigation, pictures, picture}: Props) => {
   const {width} = useWindowDimensions();
-  console.log({picture});
   return (
     <>
       <Header location="pictureDetail" navigation={navigation} />

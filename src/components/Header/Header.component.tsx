@@ -25,20 +25,14 @@ export const Header = ({location, navigation}: HeaderProps) => {
           width,
           height: height * 0.15,
           position: location === 'pictureDetail' ? 'absolute' : 'relative',
+          marginTop: location === 'pictureDetail' ? 45 : 0,
         },
       ]}>
       <Pressable onPress={() => location !== 'home' && navigation.goBack()}>
         <Hamburguer location={location} />
       </Pressable>
       <Text
-        style={{
-          marginLeft: width * 0.2,
-          color: 'black',
-          textAlign: 'center',
-          alignSelf: 'center',
-          fontWeight: 'bold',
-          fontSize: 24,
-        }}>
+        style={[styles.titleHeader, { marginLeft: width * 0.2}]}>
         {location === 'home' && 'Discover'}
       </Text>
     </View>
@@ -55,4 +49,14 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     alignItems: 'center',
   },
+  titleHeader:
+    {
+     
+      color: 'black',
+      textAlign: 'center',
+      alignSelf: 'center',
+      fontWeight: 'bold',
+      fontSize: 24,
+    }
+  
 });

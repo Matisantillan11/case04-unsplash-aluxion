@@ -9,8 +9,10 @@ import {
   View,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import {colors} from '../../lib/theme/colors';
 import {NavigationProp, ParamListBase} from '@react-navigation/native';
+//library
+import {colors} from '../../lib/theme/colors';
+//interfaces
 import {Picture} from '../../interfaces/interfaces';
 
 interface Props {
@@ -21,10 +23,11 @@ interface Props {
 export const PictureFullPage = ({navigation, picture}: Props) => {
   const {width, height} = useWindowDimensions();
   const fadeAnimation = useRef(new Animated.Value(0)).current;
+
   const fadeIn = () => {
     Animated.timing(fadeAnimation, {
       toValue: 1,
-      duration: 500,
+      duration: 1000,
       useNativeDriver: false,
     }).start();
   };

@@ -8,6 +8,7 @@ import {AuthorView as Author} from '../screens/Author/Author.view';
 
 //library
 import {colors} from '../lib/theme/colors';
+//interfaces
 import {User} from '../interfaces/interfaces';
 
 export type RootStackParamList = {
@@ -22,22 +23,7 @@ export const HomeStack = () => {
   return (
     <Stack.Navigator
       screenOptions={{
-        /* headerLeft: () => <Icon name="" size={40} color={colors.lightGreen} style={{marginLeft: 20}}/>, */
-        headerTintColor: colors.dark,
-        headerTitleAlign: 'center',
-        headerTitleStyle: {
-          textAlign: 'center',
-          fontWeight: 'bold',
-        },
         cardStyle: {backgroundColor: colors.white},
-        /*  cardStyleInterpolator: ({index, current, next, layouts: {screen}}) => {
-          const translateX = current.progress.interpolate({
-            inputRange: [index - 1, index, index + 1],
-            outputRange: [screen.width, 0, 0],
-          });
-
-          return {cardStyle: {transform: [{translateX}]}};
-        }, */
       }}>
       <Stack.Screen
         name="Home"

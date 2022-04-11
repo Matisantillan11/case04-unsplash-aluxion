@@ -1,7 +1,8 @@
 import React from 'react';
 import {
-  ActivityIndicator,
+  Animated,
   Image,
+  SafeAreaView,
   ScrollView,
   StyleSheet,
   Text,
@@ -9,7 +10,6 @@ import {
   View,
 } from 'react-native';
 import {NavigationProp, ParamListBase} from '@react-navigation/native';
-import {Card} from '../Home/Card.component';
 import {colors} from '../../lib/theme/colors';
 import {Header} from '../Header/Header.component';
 import {CardController} from '../../controllers/Home/Card.controller';
@@ -21,20 +21,22 @@ interface Props {
   photosOfUser: Photo[];
   author: User;
   status: 'fetching' | 'fetched' | 'error' | 'initial';
+  positionAnimationY: Animated.Value;
+  positionAnimationX: Animated.Value;
 }
 
-export const Author = ({navigation, photosOfUser, status, author}: Props) => {
+export const Author = ({navigation, photosOfUser, status, author, positionAnimationY, positionAnimationX}: Props) => {
   const {width, height} = useWindowDimensions();
   return (
-    <>
+    <SafeAreaView>
       {status === 'fetching' ? (
         <Loader />
       ) : (
         <>
           <Header location="author" navigation={navigation} />
           <ScrollView>
-            <View
-              style={[styles.infoContainer, {width, height: height * 0.15}]}>
+            <Animated.View
+              style={[styles.infoContainer, {width, height: height * 0.15, left: positionAnimationX}]}>
               <Image
                 style={styles.imageProfile}
                 source={{
@@ -47,9 +49,9 @@ export const Author = ({navigation, photosOfUser, status, author}: Props) => {
                   {author?.bio}
                 </Text>
               </View>
-            </View>
+            </Animated.View>
 
-            <View style={styles.carouselContainer}>
+            <Animated.View style={[styles.carouselContainer, { top: positionAnimationY}]}>
               <Text style={styles.title}>My photos</Text>
 
               {photosOfUser?.map((photo: Photo, index: number) => (
@@ -68,11 +70,11 @@ export const Author = ({navigation, photosOfUser, status, author}: Props) => {
                   gradientColors={[colors.gray, colors.grayOpacity70]}
                 />
               ))}
-            </View>
+            </Animated.View>
           </ScrollView>
         </>
       )}
-    </>
+    </SafeAreaView>
   );
 };
 

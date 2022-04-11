@@ -1,7 +1,6 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {colors} from '../../lib/theme/colors';
-import {HeaderProps} from './Header.component';
 
 interface BurguerProps {
   location: 'home' | 'pictureDetail' | 'author';

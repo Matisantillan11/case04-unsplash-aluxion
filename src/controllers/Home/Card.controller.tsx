@@ -1,5 +1,5 @@
 import React from 'react';
-import {Card, CardProps} from '../../components/Home/Card.component';
+import {Card} from '../../components/Home/Card.component';
 
 interface CardPropsController {
   text: string | null;
